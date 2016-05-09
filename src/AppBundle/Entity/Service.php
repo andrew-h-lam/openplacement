@@ -36,6 +36,43 @@ class Service
 
 
     /**
+     * @ORM\ManyToMany(targetEntity="Provider", inversedBy="service", cascade={"persist"})
+     * @ORM\JoinTable(name="provide_service",
+     * joinColumns={@ORM\JoinColumn(name="service_id", referencedColumnName="id")},
+     * inverseJoinColumns={@ORM\JoinColumn(name="provider_id", referencedColumnName="id")}
+     * )
+     */
+    private $provider;
+
+    public function __construct()
+    {
+      #  $this->provider = \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add provider
+     *
+     * @param \AppBundle\Entity\Provider $provider
+     */
+    public function addProvider(\AppBundle\Entity\Provider $provider)
+    {
+        $this->provider[] = $provider;
+    }
+
+
+
+    /**
+     * Get provider
+     *
+     *
+     */
+    public function getProvider()
+    {
+        return $this->provider->toArray();
+    }
+
+
+    /**
      * Get id
      *
      * @return integer 

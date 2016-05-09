@@ -52,6 +52,39 @@ class Provider
 
 
     /**
+     * @ORM\ManyToMany(targetEntity="Service", mappedBy="provider", cascade={"persist"})
+     */
+    private $service;
+
+
+    public function __construct()
+    {
+     #   $this->service = \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+
+    /**
+     * Add services
+     *
+     * @param \AppBundle\Entity\Service $service
+     */
+    public function addService(\AppBundle\Entity\Service $service)
+    {
+        $service->addProvider($this);
+        $this->service[] = $service;
+    }
+
+    /**
+     * Get service
+     *
+     *
+     */
+    public function getService()
+    {
+        return $this->service->toArray();
+    }
+
+    /**
      * Get id
      *
      * @return integer 

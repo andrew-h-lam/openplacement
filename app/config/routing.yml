@@ -1,0 +1,8 @@
+phone:
+    resource: "@PhoneBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation

@@ -27,14 +27,16 @@ class ProvidersController extends FOSRestController{
             ->getRepository('AppBundle:Provider')
             ->findAll();
 
+        echo print_r($providers->getService(),true);
         // FixMe: return Providers Not Found?
 
         if ($providers) {
 
             $em = $this->getDoctrine()->getManager();
+            $service_data = array();
             foreach ($providers as $provider) {
 
-                $services = $em->createQueryBuilder('c')
+            /*    $services = $em->createQueryBuilder('c')
                     ->select('s.name')
                     ->from('AppBundle\Entity\Service', 's')
                     ->innerJoin('AppBundle\Entity\ProvideService', 'ps', 'WITH', 'ps.serviceId = s.id')
@@ -46,7 +48,7 @@ class ProvidersController extends FOSRestController{
                 $service_data = array();
                 for($i=0; $i < sizeof($services); $i++) {
                     $service_data[] = $services[$i]['name'];
-                }
+                }*/
 
 
                 $data[] = array(
@@ -80,20 +82,30 @@ class ProvidersController extends FOSRestController{
         if ($provider) {
 
             $em = $this->getDoctrine()->getManager();
-
-            $services = $em->createQueryBuilder('c')
+            /*$services = $em->createQueryBuilder('c')
                 ->select('s.name')
                 ->from('AppBundle\Entity\Service', 's')
-                ->innerJoin('AppBundle\Entity\ProvideService', 'ps', 'WITH', 'ps.serviceId = s.id')
+                ->innerJoin('ProvideService', 'ps', 'WITH', 'ps.serviceId = s.id')
                 ->where('ps.providerId = :provider_id')
                 ->setParameter('provider_id', $provider->getId())
                 ->getQuery()
-                ->getResult();
+                ->getResult();*/
+
+            /*$query = $em->createQuery('
+              SELECT s.name
+              FROM AppBundle\Entity\Service s
+              JOIN s.provide_service ps on ps.service_id = s.id
+              WHERE ps.provider_id = :provider_id');
+
+            $query->setParameter('provider_id', $provider->getId());
+
+            $services = $query->getResult();*/
 
             $service_data = array();
-            for($i=0; $i < sizeof($services); $i++) {
+           /* for($i=0; $i < sizeof($services); $i++) {
                 $service_data[] = $services[$i]['name'];
-            }
+            }*/
+
 
             $data = array(
                 'id' => $provider->getId(),
@@ -115,9 +127,10 @@ class ProvidersController extends FOSRestController{
      */
     public function createProvider(Request $request) {
 
+        // FixMe: resp_code
         $resp_code = 422;
         $data = json_decode($request->getContent(), true);
-        // FixMe: dynamic?
+        // FixMe: Dynamic way?
         $provider = new Provider();
         $provider->setName($data['name']);
         $provider->setLocation($data['location']);
@@ -128,26 +141,22 @@ class ProvidersController extends FOSRestController{
         }
 
         $em = $this->getDoctrine()->getManager();
-        $em->persist($provider);
-        $em->flush();
-        $provider_id = $provider->getId();
-
-        // FixMe: fix query
         if(isset($data["provides"])) {
             $provides = $data['provides'];
             $em = $this->getDoctrine()->getManager();
-            $provide_service = new ProvideService();
 
-            #$ps = $em->getRepository('AppBundle:ProviderService');
             for($i=0; $i<sizeof($provides);$i++) {
 
                 $service = $em->getRepository('AppBundle:Service')->findOneByName($provides[$i]);
-                $provide_service->setServiceId($service->getId());
-                $provide_service->setProviderId($provider_id);
-            }
-            $em->persist($provide_service);
-            $em->flush();
 
+                $provider->addService($em->getRepository('AppBundle:Service')->find($service->getId()));
+                $em->persist( $provider );
+                $em->flush();
+            }
+        }
+        else {
+            $em->persist( $provider );
+            $em->flush();
         }
 
         $resp_code = 201;
@@ -165,7 +174,7 @@ class ProvidersController extends FOSRestController{
 
         $em = $this->getDoctrine()->getManager();
         $provider = $em->getRepository('AppBundle:Provider')->find($id);
-        // FixMe: Do it right way? Dynamic way.
+        // FixMe: Dynamic way?
         if ($provider) {
 
             $data = json_decode($request->getContent(), true);
