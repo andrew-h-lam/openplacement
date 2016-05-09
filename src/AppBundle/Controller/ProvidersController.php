@@ -2,18 +2,17 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\ProvideService;
-use AppBundle\Entity\Service;
+use AppBundle\Entity\Provider;
+#use AppBundle\Entity\ProvideService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use FOS\RestBundle\Controller\FOSRestController;
-use AppBundle\Entity\Provider;
+#use FOS\RestBundle\Controller\FOSRestController;
 use PhoneBundle\PhoneBundle;
 
-class ProvidersController extends FOSRestController{
+class ProvidersController extends Controller{
 
     /**
      * @Route("/providers")
@@ -22,33 +21,17 @@ class ProvidersController extends FOSRestController{
     public function getProviders() {
 
         $resp_code = 404;
-
         $providers = $this->getDoctrine()
             ->getRepository('AppBundle:Provider')
             ->findAll();
 
         if ($providers) {
 
-            $em = $this->getDoctrine()->getManager();
-            $service_data = array();
-            // FixMe: get list of services
             foreach ($providers as $provider) {
 
-            /*    $services = $em->createQueryBuilder('c')
-                    ->select('s.name')
-                    ->from('AppBundle\Entity\Service', 's')
-                    ->innerJoin('AppBundle\Entity\ProvideService', 'ps', 'WITH', 'ps.serviceId = s.id')
-                    ->where('ps.providerId = :provider_id')
-                    ->setParameter('provider_id', $provider->getId())
-                    ->getQuery()
-                    ->getResult();
+                $service_data = $this->getServicesProvided($provider->getId());
 
-                $service_data = array();
-                for($i=0; $i < sizeof($services); $i++) {
-                    $service_data[] = $services[$i]['name'];
-                }*/
-
-
+                // FixMe: remove phone_number if null
                 $data[] = array(
                     'id' => $provider->getId(),
                     'name' => $provider->getName(),
@@ -77,21 +60,10 @@ class ProvidersController extends FOSRestController{
             ->find($id);
 
         if ($provider) {
-            $em = $this->getDoctrine()->getManager();
-            $services = $em->createQueryBuilder('c')
-                ->select('s.name')
-                ->from('AppBundle:Service', 's')
-                ->innerJoin('s.provider', 'ps')
-                ->where('ps.id = :provider_id')
-                ->setParameter('provider_id', $provider->getId())
-                ->getQuery()
-                ->getResult();
 
-            $service_data = array();
-            for($i=0; $i < sizeof($services); $i++) {
-                $service_data[] = $services[$i]['name'];
-            }
+            $service_data = $this->getServicesProvided($provider->getId());
 
+            // FixMe: remove phone_number if null
             $data = array(
                 'id' => $provider->getId(),
                 'name' => $provider->getName(),
@@ -185,8 +157,6 @@ class ProvidersController extends FOSRestController{
                 }
             }
 
-            // ToDo: update provide_service
-
             $em->flush();
             $resp_code = 201;
         }
@@ -224,6 +194,25 @@ class ProvidersController extends FOSRestController{
         }
 
         return new Response(json_encode($resp), $resp_code);
+    }
+
+    public function getServicesProvided($provider_id) {
+
+        $em = $this->getDoctrine()->getManager();
+        $services = $em->createQueryBuilder('c')
+            ->select('s.name')
+            ->from('AppBundle:Service', 's')
+            ->innerJoin('s.provider', 'ps')
+            ->where('ps.id = :provider_id')
+            ->setParameter('provider_id', $provider_id)
+            ->getQuery()
+            ->getResult();
+
+        $service_data = array();
+        for($i=0; $i < sizeof($services); $i++) {
+            $service_data[] = $services[$i]['name'];
+        }
+        return $service_data;
     }
 }
 ?>
