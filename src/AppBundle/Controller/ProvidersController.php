@@ -79,29 +79,19 @@ class ProvidersController extends FOSRestController{
         if ($provider) {
             // FixMe: get list of services
             $em = $this->getDoctrine()->getManager();
-            /*$services = $em->createQueryBuilder('c')
+            $services = $em->createQueryBuilder('c')
                 ->select('s.name')
-                ->from('AppBundle\Entity\Service', 's')
-                ->innerJoin('s.provide_service', 'ps', 'WITH', 'ps.service_id = s.id')
-                ->where('ps.provider_id = :provider_id')
+                ->from('AppBundle:Service', 's')
+                ->innerJoin('s.provider', 'ps')
+                ->where('ps.id = :provider_id')
                 ->setParameter('provider_id', $provider->getId())
                 ->getQuery()
                 ->getResult();
 
-           /* $query = $em->createQuery('
-              SELECT s.name
-              FROM AppBundle\Entity\Service s
-              JOIN s.provide_service ps on ps.service_id = s.id
-              WHERE ps.provider_id = :provider_id');
-
-            $query->setParameter('provider_id', $provider->getId());
-
-            $services = $query->getResult();*/
-
-            $service_data = $provider->getService();
-           /* for($i=0; $i < sizeof($services); $i++) {
+            $service_data = array();
+            for($i=0; $i < sizeof($services); $i++) {
                 $service_data[] = $services[$i]['name'];
-            }*/
+            }
 
             $data = array(
                 'id' => $provider->getId(),
