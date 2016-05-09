@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 #use FOS\RestBundle\Controller\FOSRestController;
 use PhoneBundle\PhoneBundle;
 
-class ProvidersController extends Controller{
+class ProvidersController extends Controller {
 
     /**
      * @Route("/providers")
@@ -84,38 +84,46 @@ class ProvidersController extends Controller{
      */
     public function createProvider(Request $request) {
 
-        // FixMe: resp_code
         $resp_code = 422;
         $data = json_decode($request->getContent(), true);
-        $provider = new Provider();
-        $provider->setName($data['name']);
-        $provider->setLocation($data['location']);
+        // retrieve data that passed in and set the variables
+        // check for required fields name and location
+        if(isset($data['name']) && isset($data['location'])) {
 
-        if(isset($data['phone_number'])) {
-            $helper = new PhoneBundle();
-            $provider->setPhoneNumber($helper->formatPhoneNumber($data['phone_number']));
-        }
+            $provider = new Provider();
+            $provider->setName($data['name']);
+            $provider->setLocation($data['location']);
 
-        $em = $this->getDoctrine()->getManager();
-        if(isset($data["provides"])) {
-            $provides = $data['provides'];
+            // check if optional phone_number is passed
+            if(isset($data['phone_number'])) {
+                // call helper function to format phone number so we can store in phone format (xxx-xxx-xxxx)
+                $helper = new PhoneBundle();
+                $provider->setPhoneNumber($helper->formatPhoneNumber($data['phone_number']));
+            }
+
             $em = $this->getDoctrine()->getManager();
-
-            for($i=0; $i<sizeof($provides);$i++) {
-
-                $service = $em->getRepository('AppBundle:Service')->findOneByName($provides[$i]);
-
-                $provider->addService($em->getRepository('AppBundle:Service')->find($service->getId()));
-                $em->persist( $provider );
+            // check if optional provided services is passed
+            if(isset($data["provides"])) {
+                $provides = $data['provides'];
+                for($i=0; $i<sizeof($provides);$i++) {
+                    // for each service, make sure it is valid by finding if it exists in the services table
+                    $service = $em->getRepository('AppBundle:Service')->findOneByName($provides[$i]);
+                    if($service) {
+                        $provider->addService($em->getRepository('AppBundle:Service')->find($service->getId()));
+                        $em->persist($provider);
+                        $em->flush();
+                    }
+                }
+            }
+            else {
+                // if no services provided, just insert record
+                $em->persist($provider);
                 $em->flush();
             }
-        }
-        else {
-            $em->persist($provider);
-            $em->flush();
+
+            $resp_code = 201;
         }
 
-        $resp_code = 201;
         return new Response(json_encode($data), $resp_code);
     }
 
@@ -150,7 +158,6 @@ class ProvidersController extends Controller{
                 for($i=0; $i<sizeof($provides);$i++) {
 
                     $service = $em->getRepository('AppBundle:Service')->findOneByName($provides[$i]);
-
                     $provider->addService($em->getRepository('AppBundle:Service')->find($service->getId()));
                     $em->persist( $provider );
                     $em->flush();
