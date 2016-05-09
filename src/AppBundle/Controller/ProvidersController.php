@@ -203,6 +203,15 @@ class ProvidersController extends FOSRestController{
         $provider = $em->getRepository('AppBundle:Provider')->find($id);
 
         if ($provider) {
+
+            $services = $em->getRepository('AppBundle:Service')->find($provider->getId());
+            if($services) {
+
+                foreach ($services as $service_id) {
+                    $provider->removeService($this->getEntityManager()->getReference('\Entity\Service', $service_id));
+                }
+            }
+
             $em->remove($provider);
             $em->flush();
             $resp = "Provider deleted";

@@ -84,6 +84,15 @@ class Provider
         return $this->service->toArray();
     }
 
+    public function removeService(Service $service) {
+        if($this->service->contains($service)) {
+            $this->service->removeElement($service);
+            $service->removeProvider($this);
+        }
+
+        return $this;
+    }
+
     /**
      * Get id
      *
