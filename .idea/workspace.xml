@@ -22,25 +22,27 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ProvidersController.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ProvidersController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/ProvidersController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.381818">
-              <caret line="216" column="0" selection-start-line="216" selection-start-column="0" selection-end-line="216" selection-end-column="0" />
+            <state vertical-scroll-proportion="3.9112344">
+              <caret line="188" column="9" selection-start-line="188" selection-start-column="9" selection-end-line="188" selection-end-column="9" />
               <folding>
                 <element signature="e#40#76#0#PHP" expanded="true" />
-                <marker date="1462779090422" expanded="true" signature="3027:3200" placeholder="SELECT s.nam..AppBundle..." />
+                <marker date="1462785242010" expanded="true" signature="2970:3143" placeholder="SELECT s.nam..AppBundle..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Provider.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Provider.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Provider.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6033287">
-              <caret line="91" column="0" selection-start-line="91" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
-              <folding />
+            <state vertical-scroll-proportion="-4.6363635">
+              <caret line="17" column="6" selection-start-line="17" selection-start-column="6" selection-end-line="17" selection-end-column="6" />
+              <folding>
+                <element signature="e#36#68#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -48,9 +50,11 @@
       <file leaf-file-name="Service.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Service.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.109091">
-              <caret line="77" column="9" selection-start-line="77" selection-start-column="9" selection-end-line="77" selection-end-column="9" />
-              <folding />
+            <state vertical-scroll-proportion="-1.3636364">
+              <caret line="5" column="48" selection-start-line="5" selection-start-column="48" selection-end-line="5" selection-end-column="48" />
+              <folding>
+                <element signature="e#36#68#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -71,9 +75,9 @@
         <option value="$PROJECT_DIR$/src/PhoneBundle/PhoneBundle.php" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/ProvideService.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Controller/ProvidersController.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Entity/Service.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/Provider.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Entity/Service.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Controller/ProvidersController.php" />
       </list>
     </option>
   </component>
@@ -417,7 +421,7 @@
           <caret line="140" column="11" selection-start-line="140" selection-start-column="11" selection-end-line="140" selection-end-column="11" />
           <folding>
             <element signature="e#40#76#0#PHP" expanded="true" />
-            <marker date="1462779090422" expanded="true" signature="3027:3200" placeholder="SELECT s.nam..AppBundle..." />
+            <marker date="1462785242010" expanded="true" signature="2970:3143" placeholder="SELECT s.nam..AppBundle..." />
           </folding>
         </state>
       </provider>
@@ -426,7 +430,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="20" column="7" selection-start-line="20" selection-start-column="7" selection-end-line="20" selection-end-column="7" />
-          <folding />
+          <folding>
+            <element signature="e#36#68#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -434,7 +440,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="18" column="7" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
-          <folding />
+          <folding>
+            <element signature="e#36#68#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -444,7 +452,7 @@
           <caret line="140" column="11" selection-start-line="140" selection-start-column="11" selection-end-line="140" selection-end-column="11" />
           <folding>
             <element signature="e#40#76#0#PHP" expanded="true" />
-            <marker date="1462779090422" expanded="true" signature="3027:3200" placeholder="SELECT s.nam..AppBundle..." />
+            <marker date="1462785242010" expanded="true" signature="2970:3143" placeholder="SELECT s.nam..AppBundle..." />
           </folding>
         </state>
       </provider>
@@ -453,7 +461,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="20" column="7" selection-start-line="20" selection-start-column="7" selection-end-line="20" selection-end-column="7" />
-          <folding />
+          <folding>
+            <element signature="e#36#68#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -461,7 +471,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="18" column="7" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
-          <folding />
+          <folding>
+            <element signature="e#36#68#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -535,30 +547,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/ProvidersController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.381818">
-          <caret line="216" column="0" selection-start-line="216" selection-start-column="0" selection-end-line="216" selection-end-column="0" />
-          <folding>
-            <element signature="e#40#76#0#PHP" expanded="true" />
-            <marker date="1462779090422" expanded="true" signature="3027:3200" placeholder="SELECT s.nam..AppBundle..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Service.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.109091">
-          <caret line="77" column="9" selection-start-line="77" selection-start-column="9" selection-end-line="77" selection-end-column="9" />
-          <folding />
+        <state vertical-scroll-proportion="-1.3636364">
+          <caret line="5" column="48" selection-start-line="5" selection-start-column="48" selection-end-line="5" selection-end-column="48" />
+          <folding>
+            <element signature="e#36#68#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Provider.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6033287">
-          <caret line="91" column="0" selection-start-line="91" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
-          <folding />
+        <state vertical-scroll-proportion="-4.6363635">
+          <caret line="17" column="6" selection-start-line="17" selection-start-column="6" selection-end-line="17" selection-end-column="6" />
+          <folding>
+            <element signature="e#36#68#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/ProvidersController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="3.9112344">
+          <caret line="188" column="9" selection-start-line="188" selection-start-column="9" selection-end-line="188" selection-end-column="9" />
+          <folding>
+            <element signature="e#40#76#0#PHP" expanded="true" />
+            <marker date="1462785242010" expanded="true" signature="2970:3143" placeholder="SELECT s.nam..AppBundle..." />
+          </folding>
         </state>
       </provider>
     </entry>

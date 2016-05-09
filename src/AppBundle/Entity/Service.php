@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Service
@@ -12,12 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Service
 {
-
-    /*private $providers;
-    public function addProvider(Provider $provider) {
-        $this->providers[] = $provider;
-    }*/
-
     /**
      * @var int
      *
@@ -34,7 +29,6 @@ class Service
      */
     private $name;
 
-
     /**
      * @ORM\ManyToMany(targetEntity="Provider", inversedBy="service", cascade={"persist"})
      * @ORM\JoinTable(name="provide_service",
@@ -44,9 +38,8 @@ class Service
      */
     private $provider;
 
-    public function __construct()
-    {
-      #  $this->provider = \Doctrine\Common\Collections\ArrayCollection();
+    public function __construct() {
+        $this->provider =  new ArrayCollection();
     }
 
     /**
@@ -59,11 +52,8 @@ class Service
         $this->provider[] = $provider;
     }
 
-
-
     /**
      * Get provider
-     *
      *
      */
     public function getProvider()

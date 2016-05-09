@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Provider
@@ -12,14 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Provider
 {
-
-    /*private $services;
-
-    public function addService(Service $service) {
-        $service->addProvider($this); // synchronously updating inverse side
-        $this->services[] = $service;
-    }*/
-
     /**
      * @var int
      *
@@ -53,15 +46,16 @@ class Provider
 
     /**
      * @ORM\ManyToMany(targetEntity="Service", mappedBy="provider", cascade={"persist"})
+     * @ORM\JoinTable(name="provide_service",
+     * joinColumns={@ORM\JoinColumn(name="provider_id", referencedColumnName="id")},
+     * inverseJoinColumns={@ORM\JoinColumn(name="service_id", referencedColumnName="id")}
+     * )
      */
     private $service;
 
-
-    public function __construct()
-    {
-     #   $this->service = \Doctrine\Common\Collections\ArrayCollection();
+    public function __construct () {
+        $this->service = new ArrayCollection();
     }
-
 
     /**
      * Add services
@@ -81,7 +75,7 @@ class Provider
      */
     public function getService()
     {
-        return $this->service->toArray();
+        return $this->service;
     }
 
     public function removeService(Service $service) {
