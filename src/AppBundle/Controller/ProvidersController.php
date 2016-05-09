@@ -77,7 +77,6 @@ class ProvidersController extends FOSRestController{
             ->find($id);
 
         if ($provider) {
-            // FixMe: get list of services
             $em = $this->getDoctrine()->getManager();
             $services = $em->createQueryBuilder('c')
                 ->select('s.name')
@@ -169,6 +168,20 @@ class ProvidersController extends FOSRestController{
                 else {
                     $helper = new PhoneBundle();
                     $provider->setPhoneNumber($helper->formatPhoneNumber($data['phone_number']));
+                }
+            }
+
+            // FixMe: duplicates?
+            if(isset($data['provides'])) {
+                $provides = $data['provides'];
+
+                for($i=0; $i<sizeof($provides);$i++) {
+
+                    $service = $em->getRepository('AppBundle:Service')->findOneByName($provides[$i]);
+
+                    $provider->addService($em->getRepository('AppBundle:Service')->find($service->getId()));
+                    $em->persist( $provider );
+                    $em->flush();
                 }
             }
 
