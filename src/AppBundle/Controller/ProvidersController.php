@@ -137,29 +137,42 @@ class ProvidersController extends Controller {
         $data = array();
         $em = $this->getDoctrine()->getManager();
         $provider = $em->getRepository('AppBundle:Provider')->find($id);
-        // FixMe: Better way to do this?
         if ($provider) {
 
             $data = json_decode($request->getContent(), true);
+            // FixMe: Better way to set variables?
             if(isset($data['name'])) $provider->setName($data['name']);
             if(isset($data['location'])) $provider->setLocation($data['location']);
             if(isset($data['phone_number'])) {
-                if(is_null($data['phone_number'])) $provider->setPhoneNumber(null);
+                // check if optional phone_number is passed and if it is null
+                if(is_null($data['phone_number'])) {
+                    $provider->setPhoneNumber(null);
+                }
                 else {
+                    // call helper function to format phone number so we can store in phone format (xxx-xxx-xxxx)
                     $helper = new PhoneBundle();
                     $provider->setPhoneNumber($helper->formatPhoneNumber($data['phone_number']));
                 }
             }
 
-            // FixMe: duplicates?
             if(isset($data['provides'])) {
+
                 $provides = $data['provides'];
 
+                // If provides is passed in the update it should overwrite the existing array.
+                // Get services provided and then remove them before adding new ones
+                $services = $this->getServicesProvided($id);
+                if($services) {
+                    for($i=0; $i<sizeof($services);$i++) {
+                        $service_to_remove = $em->getRepository('AppBundle:Service')->findOneByName($services[$i]);
+                        $provider->removeService($em->getRepository('AppBundle:Service')->find($service_to_remove->getId()));
+                    }
+                }
+                // add services provided
                 for($i=0; $i<sizeof($provides);$i++) {
-
-                    $service = $em->getRepository('AppBundle:Service')->findOneByName($provides[$i]);
-                    $provider->addService($em->getRepository('AppBundle:Service')->find($service->getId()));
-                    $em->persist( $provider );
+                    $service_to_add = $em->getRepository('AppBundle:Service')->findOneByName($provides[$i]);
+                    $provider->addService($em->getRepository('AppBundle:Service')->find($service_to_add->getId()));
+                    $em->persist($provider);
                     $em->flush();
                 }
             }
@@ -203,6 +216,9 @@ class ProvidersController extends Controller {
         return new Response(json_encode($resp), $resp_code);
     }
 
+    /*
+     * given a provider id, return list of services in array format
+     */
     public function getServicesProvided($provider_id) {
 
         $em = $this->getDoctrine()->getManager();

@@ -78,7 +78,7 @@ class Provider
         return $this->service;
     }
 
-    public function removeService(Service $service) {
+    public function removeService(\AppBundle\Entity\Service $service) {
         if($this->service->contains($service)) {
             $this->service->removeElement($service);
             $service->removeProvider($this);

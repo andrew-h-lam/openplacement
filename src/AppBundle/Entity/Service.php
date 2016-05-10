@@ -61,7 +61,7 @@ class Service
         return $this->provider->toArray();
     }
 
-    public function removeProvider(Provider $provider) {
+    public function removeProvider(\AppBundle\Entity\Provider $provider) {
         if($this->provider->contains($provider)) {
             $this->provider->removeElement($provider);
             $provider->removeService($this);
