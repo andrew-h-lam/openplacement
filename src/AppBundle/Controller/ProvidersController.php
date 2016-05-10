@@ -192,7 +192,7 @@ class ProvidersController extends Controller {
     public function deleteProvider($id) {
 
         $resp_code = 404;
-        $resp = "Provider not found";
+        $data = "Provider not found";
 
         $em = $this->getDoctrine()->getManager();
         $provider = $em->getRepository('AppBundle:Provider')->find($id);
@@ -209,11 +209,11 @@ class ProvidersController extends Controller {
 
             $em->remove($provider);
             $em->flush();
-            $resp = "Provider deleted";
+            $data = "Provider deleted";
             $resp_code = 204;
         }
 
-        return new Response(json_encode($resp), $resp_code);
+        return new Response($data, $resp_code);
     }
 
     /*
