@@ -1,0 +1,24 @@
+GET /providers/{id}
+- retrieves provider info with provides
+- retrieves format without provides
+- phone_number does not show up if null
+- provides is empty if there are no services provided
+
+GET /providers
+- retrieves all provider info w/ provides field populated
+- retrieves all provider info w/ provides field empty
+- phone_number does not show up if null
+- provides is empty if there are no services provided
+
+POST /providers
+- creates new provider in provider table
+- creates records in provide_service table if valid services are used
+- if invalid service is given, nothing happens
+
+PUT /providers/{id}
+- updates provider
+- if services provided is set, overwrites previous provide_service records
+
+DELETE /providers/{id}
+- removes provider from providers table
+- removes corresponding info from provide_service table
