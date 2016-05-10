@@ -3,13 +3,11 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Provider;
-#use AppBundle\Entity\ProvideService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-#use FOS\RestBundle\Controller\FOSRestController;
 use PhoneBundle\PhoneBundle;
 
 class ProvidersController extends Controller {
@@ -28,21 +26,22 @@ class ProvidersController extends Controller {
         if ($providers) {
 
             foreach ($providers as $provider) {
-
                 $service_data = $this->getServicesProvided($provider->getId());
 
-                // FixMe: remove phone_number if null
-                $data[] = array(
+                $temp_data = array(
                     'id' => $provider->getId(),
                     'name' => $provider->getName(),
                     'location' => $provider->getLocation(),
                     'phone_number' => $provider->getPhoneNumber(),
                     'provides' => $service_data
                 );
+
+                $data[] = array_filter($temp_data);
             }
 
             $resp_code = 200;
         }
+
         return new Response(json_encode($data), $resp_code);
     }
 
@@ -63,15 +62,14 @@ class ProvidersController extends Controller {
 
             $service_data = $this->getServicesProvided($provider->getId());
 
-            // FixMe: remove phone_number if null
-            $data = array(
+            $temp_data = array(
                 'id' => $provider->getId(),
                 'name' => $provider->getName(),
                 'location' => $provider->getLocation(),
                 'phone_number' => $provider->getPhoneNumber(),
                 'provides' => $service_data
             );
-
+            $data = array_filter($temp_data);
             $resp_code = 200;
         }
 
